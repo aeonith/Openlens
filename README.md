@@ -2,6 +2,10 @@
 
 A modern, evidence-first knowledge and media platform where anyone can submit articles or videos, link claims to evidence, and contribute to a transparent network of information.
 
+## 💡 Vision
+
+OpenLens is a next-generation, community-driven knowledge network — a fusion of Wikipedia, X, and Instagram with AI-powered insights. Create the world's first *open-source, community-owned media network* that rewards truth, creativity, and transparency — with minimal censorship (only illegal content and explicit nudity removed).
+
 ## Features
 
 - 📝 Article submission with rich content
@@ -11,12 +15,14 @@ A modern, evidence-first knowledge and media platform where anyone can submit ar
 - 🔍 Advanced filtering (verified content, theories, trending)
 - 🔄 Real-time feed updates
 - 📱 Responsive X/Instagram-style UI
+- 🤖 AI-driven content curation and suggestions
 
 ## Tech Stack
 
 - **Frontend:** Next.js 14 (App Router), TypeScript, Tailwind CSS
 - **Backend:** Supabase (PostgreSQL + Auth + Realtime + Storage)
 - **Icons:** Lucide React
+- **AI:** OpenAI API integration
 - **Deployment:** Vercel (recommended)
 
 ## Getting Started
