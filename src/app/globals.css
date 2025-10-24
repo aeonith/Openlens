@@ -11,13 +11,9 @@
 }
 
 body {
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(60, 60, 60, 0.9) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(50, 50, 50, 0.9) 0%, transparent 50%),
-    radial-gradient(circle at 40% 20%, rgba(55, 55, 55, 0.8) 0%, transparent 40%),
-    radial-gradient(circle at 90% 10%, rgba(65, 65, 65, 0.7) 0%, transparent 30%),
-    linear-gradient(135deg, #2a2a2a 0%, #3d3d3d 25%, #2a2a2a 50%, #343434 75%, #2a2a2a 100%);
-  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 200% 200%;
+  background-image: url('https://images.unsplash.com/photo-1518732114293-4d8dd604aa3c?w=1920&q=80');
+  background-size: cover;
+  background-position: center;
   background-attachment: fixed;
   color: var(--foreground);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -34,10 +30,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: 
-    repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,.08) 3px, rgba(255,255,255,.08) 6px),
-    repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(255,255,255,.08) 3px, rgba(255,255,255,.08) 6px);
-  opacity: 0.4;
+  background: rgba(0, 0, 0, 0.5);
   pointer-events: none;
   z-index: 0;
 }
