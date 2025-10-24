@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import ArticleCard from './ArticleCard'
 import { createClient } from '@/lib/supabase'
 import { mockArticles } from '@/lib/mockData'
+import { useLocalStore } from '@/lib/localStore'
 
 interface Article {
   id: string

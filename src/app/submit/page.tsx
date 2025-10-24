@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
 import { Upload, Link as LinkIcon, CheckCircle, AlertTriangle, HelpCircle } from 'lucide-react'
 import VideoUpload from '@/components/VideoUpload'
+import { useLocalStore } from '@/lib/localStore'
 
 export default function SubmitPage() {
   const [title, setTitle] = useState('')
@@ -17,6 +18,7 @@ export default function SubmitPage() {
   const [contentWarning, setContentWarning] = useState<'none' | 'graphic' | 'violence' | 'sensitive'>('none')
   const router = useRouter()
   const supabase = createClient()
+  const { user, addArticle } = useLocalStore()
 
   const addClaim = () => {
     setClaims([...claims, { text: '', evidence: '', status: 'unverified' }])
@@ -37,12 +39,15 @@ export default function SubmitPage() {
     setLoading(true)
 
     try {
-      const { data: { user } } = await supabase.auth.getUser()
+      const { data: { user: supabaseUser } } = await supabase.auth.getUser()
       
-      if (!user) {
+      if (!supabaseUser && !user) {
         alert('Please log in to submit articles')
+        router.push('/auth/login')
         return
       }
+
+      const currentUserId = supabaseUser?.id || user?.id || '1'
 
       let finalMediaUrl = mediaUrl
       let mediaType: 'image' | 'video' | null = null
@@ -50,7 +55,7 @@ export default function SubmitPage() {
       // Handle video file upload
       if (videoFile) {
         const fileExt = videoFile.name.split('.').pop()
-        const fileName = `${user.id}-${Date.now()}.${fileExt}`
+        const fileName = `${currentUserId}-${Date.now()}.${fileExt}`
         
         const { data: uploadData, error: uploadError } = await supabase.storage
           .from('media')
@@ -71,20 +76,34 @@ export default function SubmitPage() {
         mediaType = mediaUrl.includes('youtube') || mediaUrl.includes('.mp4') || mediaUrl.includes('video') ? 'video' : 'image'
       }
 
-      const { data: article, error: articleError } = await supabase
-        .from('articles')
-        .insert({
-          author_id: user.id,
+      try {
+        const { data: article, error: articleError } = await supabase
+          .from('articles')
+          .insert({
+            author_id: currentUserId,
+            title,
+            content,
+            media_url: finalMediaUrl || null,
+            media_type: mediaType,
+            content_warning: contentWarning
+          })
+          .select()
+          .single()
+
+        if (articleError) throw articleError
+      } catch (dbError) {
+        console.log('Using local storage')
+        addArticle({
+          author_id: currentUserId,
           title,
           content,
           media_url: finalMediaUrl || null,
           media_type: mediaType,
           content_warning: contentWarning
         })
-        .select()
-        .single()
-
-      if (articleError) throw articleError
+        router.push('/')
+        return
+      }
 
       if (claims.length > 0 && article) {
         const claimsData = claims

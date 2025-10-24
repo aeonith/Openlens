@@ -40,7 +40,7 @@ export default function Navigation() {
           <Link href="/submit" className={`flex items-center space-x-2 ${isActive('/submit') ? 'text-blue-500' : 'text-gray-400 hover:text-white'}`}>
             <PlusCircle className="w-6 h-6" />
           </Link>
-          <Link href="/profile" className={`flex items-center space-x-2 ${isActive('/profile') ? 'text-blue-500' : 'text-gray-400 hover:text-white'}`}>
+          <Link href="/auth/simple-login" className={`flex items-center space-x-2 ${isActive('/auth/simple-login') ? 'text-blue-500' : 'text-gray-400 hover:text-white'}`}>
             <User className="w-6 h-6" />
           </Link>
         </div>
