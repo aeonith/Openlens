@@ -2,6 +2,7 @@
 
 import { Heart, MessageCircle, Share2, CheckCircle, AlertTriangle, HelpCircle } from 'lucide-react'
 import Link from 'next/link'
+import VerificationBadge from './VerificationBadge'
 
 interface ArticleCardProps {
   id: string
@@ -10,6 +11,7 @@ interface ArticleCardProps {
   author: {
     username: string
     avatar_url?: string
+    verified?: boolean
   }
   mediaUrl?: string
   mediaType?: 'image' | 'video'
@@ -38,14 +40,17 @@ export default function ArticleCard({
   createdAt 
 }: ArticleCardProps) {
   return (
-    <div className="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden hover:border-gray-700 transition">
-      <div className="p-4">
+    <div className="gradient-border glow-border overflow-hidden transition-all">
+      <div className="p-4 bg-gray-900 rounded-lg">
         <div className="flex items-center space-x-3 mb-3">
           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold">
             {author.username[0].toUpperCase()}
           </div>
           <div>
-            <p className="text-white font-medium">{author.username}</p>
+            <div className="flex items-center space-x-2">
+              <p className="text-white font-medium">{author.username}</p>
+              {author.verified && <VerificationBadge verified size="sm" />}
+            </div>
             <p className="text-gray-500 text-sm">{new Date(createdAt).toLocaleDateString()}</p>
           </div>
         </div>

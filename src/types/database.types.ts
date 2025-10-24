@@ -18,6 +18,7 @@ export interface Database {
           bio: string | null
           reputation_points: number
           role: 'user' | 'reviewer' | 'moderator' | 'admin'
+          verified: boolean
           created_at: string
           updated_at: string
         }
@@ -51,6 +52,7 @@ export interface Database {
           content: string
           media_url: string | null
           media_type: 'image' | 'video' | null
+          content_warning: 'none' | 'graphic' | 'violence' | 'sensitive' | null
           views: number
           likes: number
           created_at: string

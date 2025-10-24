@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import ArticleCard from './ArticleCard'
 import { createClient } from '@/lib/supabase'
+import { mockArticles } from '@/lib/mockData'
 
 interface Article {
   id: string
@@ -27,37 +28,47 @@ export default function Feed() {
 
   useEffect(() => {
     async function fetchArticles() {
-      const { data, error } = await supabase
-        .from('articles')
-        .select(`
-          *,
-          users (username, avatar_url)
-        `)
-        .order('created_at', { ascending: false })
-        .limit(20)
+      try {
+        const { data, error } = await supabase
+          .from('articles')
+          .select(`
+            *,
+            users (username, avatar_url)
+          `)
+          .order('created_at', { ascending: false })
+          .limit(20)
 
-      if (error) {
-        console.error('Error fetching articles:', error)
-      } else {
-        setArticles(data as any)
+        if (error) {
+          console.log('Using mock data - Supabase not configured')
+          setArticles(mockArticles as any)
+        } else {
+          setArticles(data as any)
+        }
+      } catch (err) {
+        console.log('Using mock data - Supabase not configured')
+        setArticles(mockArticles as any)
       }
       setLoading(false)
     }
 
     fetchArticles()
 
-    const channel = supabase
-      .channel('articles-channel')
-      .on('postgres_changes', 
-        { event: 'INSERT', schema: 'public', table: 'articles' },
-        (payload) => {
-          setArticles((prev) => [payload.new as any, ...prev])
-        }
-      )
-      .subscribe()
+    try {
+      const channel = supabase
+        .channel('articles-channel')
+        .on('postgres_changes', 
+          { event: 'INSERT', schema: 'public', table: 'articles' },
+          (payload) => {
+            setArticles((prev) => [payload.new as any, ...prev])
+          }
+        )
+        .subscribe()
 
-    return () => {
-      supabase.removeChannel(channel)
+      return () => {
+        supabase.removeChannel(channel)
+      }
+    } catch (err) {
+      console.log('Real-time not available')
     }
   }, [])
 

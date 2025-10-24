@@ -17,14 +17,17 @@ export default function Navigation() {
         </Link>
         
         <div className="flex-1 max-w-md mx-8">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <input
-              type="text"
-              placeholder="Search articles, claims..."
-              className="w-full bg-gray-900 text-white pl-10 pr-4 py-2 rounded-full border border-gray-700 focus:border-blue-500 focus:outline-none"
-            />
-          </div>
+          <form action="/search" method="GET">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                name="q"
+                placeholder="Ask AI anything... Search articles, claims, knowledge..."
+                className="w-full bg-gray-900 text-white pl-10 pr-4 py-2 rounded-full border border-gray-700 focus:border-purple-500 focus:outline-none transition"
+              />
+            </div>
+          </form>
         </div>
 
         <div className="flex items-center space-x-6">
