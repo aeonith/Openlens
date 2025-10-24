@@ -10,7 +10,7 @@ export default function Navigation() {
   const isActive = (path: string) => pathname === path
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-black border-b border-gray-800 z-50">
+    <nav className="fixed top-0 left-0 right-0 bg-gray-900/80 backdrop-blur-md border-b border-gray-800 z-50">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="text-2xl font-bold text-white">
           OpenLens

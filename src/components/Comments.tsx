@@ -80,7 +80,7 @@ export default function Comments({ articleId }: CommentsProps) {
         <span>Comments ({comments.length})</span>
       </h3>
 
-      <form onSubmit={handleSubmit} className="gradient-border glow-border p-4 bg-gray-900 rounded-lg">
+      <form onSubmit={handleSubmit} className="gradient-border glow-border p-4 bg-gray-900/90 backdrop-blur-sm rounded-lg">
         <textarea
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
@@ -100,7 +100,7 @@ export default function Comments({ articleId }: CommentsProps) {
 
       <div className="space-y-3">
         {comments.map((comment) => (
-          <div key={comment.id} className="gradient-border p-4 bg-gray-900 rounded-lg">
+          <div key={comment.id} className="gradient-border p-4 bg-gray-900/90 backdrop-blur-sm rounded-lg">
             <div className="flex items-start space-x-3">
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-white font-bold flex-shrink-0">
                 {comment.users.username[0].toUpperCase()}

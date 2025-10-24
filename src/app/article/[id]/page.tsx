@@ -84,7 +84,7 @@ export default function ArticlePage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">
-      <article className="gradient-border glow-border p-8 bg-gray-900 rounded-lg mb-6">
+      <article className="gradient-border glow-border p-8 bg-gray-900/90 backdrop-blur-sm rounded-lg mb-6">
         <div className="flex items-center space-x-3 mb-6">
           <div className="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-white font-bold">
             {article.users.username[0].toUpperCase()}

@@ -14,7 +14,7 @@ export default function VerifyPage() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-12">
-      <div className="gradient-border glow-border p-8 bg-gray-900 rounded-lg">
+      <div className="gradient-border glow-border p-8 bg-gray-900/90 backdrop-blur-sm rounded-lg">
         <div className="text-center space-y-6">
           <div className="flex justify-center">
             <CheckCircle className="w-20 h-20 text-blue-500 fill-blue-500" />

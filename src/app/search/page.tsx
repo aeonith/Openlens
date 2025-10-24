@@ -58,7 +58,7 @@ export default function SearchPage() {
         </div>
 
         {aiSummary && (
-          <div className="gradient-border glow-border p-6 bg-gray-900 rounded-lg mb-6">
+          <div className="gradient-border glow-border p-6 bg-gray-900/90 backdrop-blur-sm rounded-lg mb-6">
             <div className="flex items-start space-x-3">
               <Sparkles className="w-6 h-6 text-cyan-400 flex-shrink-0 mt-1" />
               <div>
