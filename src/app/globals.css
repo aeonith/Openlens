@@ -11,7 +11,7 @@
 }
 
 body {
-  background-image: url('https://images.unsplash.com/photo-1518732114293-4d8dd604aa3c?w=1920&q=80');
+  background-image: url('/images/rock-background.jpeg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
