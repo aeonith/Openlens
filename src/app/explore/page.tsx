@@ -14,38 +14,44 @@ export default function ExplorePage() {
   useEffect(() => {
     async function fetchArticles() {
       setLoading(true)
-      let query = supabase
-        .from('articles')
-        .select(`
-          *,
-          users (username, avatar_url),
-          claims (status)
-        `)
+      try {
+        let query = supabase
+          .from('articles')
+          .select(`
+            *,
+            users (username, avatar_url, verified),
+            claims (status)
+          `)
 
-      if (filter === 'trending') {
-        query = query.order('views', { ascending: false })
-      } else {
-        query = query.order('created_at', { ascending: false })
-      }
-
-      const { data, error } = await query.limit(20)
-
-      if (error) {
-        console.error('Error fetching articles:', error)
-      } else {
-        let filtered = data
-
-        if (filter === 'verified') {
-          filtered = data.filter((article: any) => 
-            article.claims?.some((claim: any) => claim.status === 'verified')
-          )
-        } else if (filter === 'theory') {
-          filtered = data.filter((article: any) => 
-            article.claims?.some((claim: any) => claim.status === 'theory')
-          )
+        if (filter === 'trending') {
+          query = query.order('views', { ascending: false })
+        } else {
+          query = query.order('created_at', { ascending: false })
         }
 
-        setArticles(filtered)
+        const { data, error } = await query.limit(20)
+
+        if (error) {
+          console.log('Using mock data - Supabase not configured')
+          setArticles([])
+        } else {
+          let filtered = data
+
+          if (filter === 'verified') {
+            filtered = data.filter((article: any) => 
+              article.claims?.some((claim: any) => claim.status === 'verified')
+            )
+          } else if (filter === 'theory') {
+            filtered = data.filter((article: any) => 
+              article.claims?.some((claim: any) => claim.status === 'theory')
+            )
+          }
+
+          setArticles(filtered)
+        }
+      } catch (err) {
+        console.log('Using mock data - Supabase not configured')
+        setArticles([])
       }
       setLoading(false)
     }
