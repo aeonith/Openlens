@@ -12,11 +12,11 @@
 
 body {
   background: 
-    radial-gradient(circle at 20% 50%, rgba(40, 40, 40, 0.8) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(30, 30, 30, 0.8) 0%, transparent 50%),
-    radial-gradient(circle at 40% 20%, rgba(35, 35, 35, 0.6) 0%, transparent 40%),
-    radial-gradient(circle at 90% 10%, rgba(45, 45, 45, 0.5) 0%, transparent 30%),
-    linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 25%, #1a1a1a 50%, #242424 75%, #1a1a1a 100%);
+    radial-gradient(circle at 20% 50%, rgba(60, 60, 60, 0.9) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(50, 50, 50, 0.9) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(55, 55, 55, 0.8) 0%, transparent 40%),
+    radial-gradient(circle at 90% 10%, rgba(65, 65, 65, 0.7) 0%, transparent 30%),
+    linear-gradient(135deg, #2a2a2a 0%, #3d3d3d 25%, #2a2a2a 50%, #343434 75%, #2a2a2a 100%);
   background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 200% 200%;
   background-attachment: fixed;
   color: var(--foreground);
@@ -24,6 +24,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
+  min-height: 100vh;
 }
 
 body::before {
@@ -34,9 +35,9 @@ body::before {
   width: 100%;
   height: 100%;
   background-image: 
-    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,.03) 2px, rgba(255,255,255,.03) 4px),
-    repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,.03) 2px, rgba(255,255,255,.03) 4px);
-  opacity: 0.3;
+    repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,.08) 3px, rgba(255,255,255,.08) 6px),
+    repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(255,255,255,.08) 3px, rgba(255,255,255,.08) 6px);
+  opacity: 0.4;
   pointer-events: none;
   z-index: 0;
 }

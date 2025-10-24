@@ -4,13 +4,17 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
 import { Upload, Link as LinkIcon, CheckCircle, AlertTriangle, HelpCircle } from 'lucide-react'
+import VideoUpload from '@/components/VideoUpload'
 
 export default function SubmitPage() {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [mediaUrl, setMediaUrl] = useState('')
+  const [videoFile, setVideoFile] = useState<File | null>(null)
+  const [uploadMethod, setUploadMethod] = useState<'url' | 'upload'>('url')
   const [claims, setClaims] = useState<Array<{ text: string; evidence: string; status: 'verified' | 'theory' | 'unverified' }>>([])
   const [loading, setLoading] = useState(false)
+  const [contentWarning, setContentWarning] = useState<'none' | 'graphic' | 'violence' | 'sensitive'>('none')
   const router = useRouter()
   const supabase = createClient()
 
@@ -40,14 +44,42 @@ export default function SubmitPage() {
         return
       }
 
+      let finalMediaUrl = mediaUrl
+      let mediaType: 'image' | 'video' | null = null
+
+      // Handle video file upload
+      if (videoFile) {
+        const fileExt = videoFile.name.split('.').pop()
+        const fileName = `${user.id}-${Date.now()}.${fileExt}`
+        
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from('media')
+          .upload(fileName, videoFile)
+
+        if (uploadError) {
+          console.error('Upload error:', uploadError)
+          alert('Video upload failed. Using URL method instead.')
+        } else {
+          const { data: { publicUrl } } = supabase.storage
+            .from('media')
+            .getPublicUrl(fileName)
+          
+          finalMediaUrl = publicUrl
+          mediaType = 'video'
+        }
+      } else if (mediaUrl) {
+        mediaType = mediaUrl.includes('youtube') || mediaUrl.includes('.mp4') || mediaUrl.includes('video') ? 'video' : 'image'
+      }
+
       const { data: article, error: articleError } = await supabase
         .from('articles')
         .insert({
           author_id: user.id,
           title,
           content,
-          media_url: mediaUrl || null,
-          media_type: mediaUrl.includes('youtube') || mediaUrl.includes('.mp4') ? 'video' : mediaUrl ? 'image' : null
+          media_url: finalMediaUrl || null,
+          media_type: mediaType,
+          content_warning: contentWarning
         })
         .select()
         .single()
@@ -109,18 +141,62 @@ export default function SubmitPage() {
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium mb-2">Media URL (Optional)</label>
-          <div className="relative">
-            <LinkIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <input
-              type="url"
-              value={mediaUrl}
-              onChange={(e) => setMediaUrl(e.target.value)}
-              className="w-full bg-gray-900 border border-gray-700 rounded-lg pl-10 pr-4 py-3 text-white focus:border-blue-500 focus:outline-none"
-              placeholder="https://example.com/image.jpg or YouTube link"
-            />
+        <div className="space-y-4">
+          <label className="block text-sm font-medium mb-2">Media (Optional)</label>
+          
+          <div className="flex space-x-3 mb-3">
+            <button
+              type="button"
+              onClick={() => setUploadMethod('url')}
+              className={`px-4 py-2 rounded-lg font-medium transition ${
+                uploadMethod === 'url' 
+                  ? 'bg-cyan-600 text-white' 
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+              }`}
+            >
+              URL Link
+            </button>
+            <button
+              type="button"
+              onClick={() => setUploadMethod('upload')}
+              className={`px-4 py-2 rounded-lg font-medium transition ${
+                uploadMethod === 'upload' 
+                  ? 'bg-cyan-600 text-white' 
+                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+              }`}
+            >
+              Upload Video
+            </button>
           </div>
+
+          {uploadMethod === 'url' ? (
+            <div className="relative">
+              <LinkIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="url"
+                value={mediaUrl}
+                onChange={(e) => setMediaUrl(e.target.value)}
+                className="w-full bg-gray-900 border border-gray-700 rounded-lg pl-10 pr-4 py-3 text-white focus:border-cyan-500 focus:outline-none"
+                placeholder="https://example.com/image.jpg or YouTube link"
+              />
+            </div>
+          ) : (
+            <VideoUpload onVideoSelect={setVideoFile} />
+          )}
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">Content Warning</label>
+          <select
+            value={contentWarning}
+            onChange={(e) => setContentWarning(e.target.value as any)}
+            className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:border-cyan-500 focus:outline-none"
+          >
+            <option value="none">No Warning</option>
+            <option value="graphic">Graphic Content</option>
+            <option value="violence">Violence / Blood</option>
+            <option value="sensitive">Sensitive Content</option>
+          </select>
         </div>
 
         <div>
