@@ -12,7 +12,7 @@
 
 body {
   background-image: url('/images/rock-background.jpeg');
-  background-size: 120%;
+  background-size: 80%;
   background-position: center;
   background-attachment: fixed;
   color: var(--foreground);
