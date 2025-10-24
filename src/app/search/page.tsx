@@ -51,7 +51,7 @@ export default function SearchPage() {
     <div className="max-w-4xl mx-auto px-4 py-6">
       <div className="mb-8">
         <div className="flex items-center space-x-3 mb-4">
-          <Search className="w-8 h-8 text-purple-500" />
+          <Search className="w-8 h-8 text-cyan-400" />
           <h1 className="text-3xl font-bold">
             Search Results {query && `for "${query}"`}
           </h1>
@@ -60,9 +60,9 @@ export default function SearchPage() {
         {aiSummary && (
           <div className="gradient-border glow-border p-6 bg-gray-900 rounded-lg mb-6">
             <div className="flex items-start space-x-3">
-              <Sparkles className="w-6 h-6 text-purple-500 flex-shrink-0 mt-1" />
+              <Sparkles className="w-6 h-6 text-cyan-400 flex-shrink-0 mt-1" />
               <div>
-                <h3 className="font-semibold text-lg mb-2 text-purple-300">AI Summary</h3>
+                <h3 className="font-semibold text-lg mb-2 text-cyan-300">AI Summary</h3>
                 <p className="text-gray-300 leading-relaxed">{aiSummary}</p>
               </div>
             </div>

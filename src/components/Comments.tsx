@@ -91,7 +91,7 @@ export default function Comments({ articleId }: CommentsProps) {
         <button
           type="submit"
           disabled={loading || !newComment.trim()}
-          className="mt-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-700 disabled:to-gray-700 text-white font-medium py-2 px-6 rounded-lg transition flex items-center space-x-2"
+          className="mt-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 disabled:from-gray-700 disabled:to-gray-700 text-white font-medium py-2 px-6 rounded-lg transition flex items-center space-x-2"
         >
           <Send className="w-4 h-4" />
           <span>{loading ? 'Posting...' : 'Post Comment'}</span>
@@ -102,7 +102,7 @@ export default function Comments({ articleId }: CommentsProps) {
         {comments.map((comment) => (
           <div key={comment.id} className="gradient-border p-4 bg-gray-900 rounded-lg">
             <div className="flex items-start space-x-3">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold flex-shrink-0">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-white font-bold flex-shrink-0">
                 {comment.users.username[0].toUpperCase()}
               </div>
               <div className="flex-1">

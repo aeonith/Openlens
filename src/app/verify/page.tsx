@@ -58,7 +58,7 @@ export default function VerifyPage() {
             <button
               onClick={handleVerify}
               disabled={loading}
-              className="w-full max-w-md mx-auto bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-700 disabled:to-gray-700 text-white font-bold py-4 px-8 rounded-lg transition flex items-center justify-center space-x-2 text-lg"
+              className="w-full max-w-md mx-auto bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 disabled:from-gray-700 disabled:to-gray-700 text-white font-bold py-4 px-8 rounded-lg transition flex items-center justify-center space-x-2 text-lg"
             >
               <CreditCard className="w-6 h-6" />
               <span>{loading ? 'Processing...' : 'Get Verified Now'}</span>

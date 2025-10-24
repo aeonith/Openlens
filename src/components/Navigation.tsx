@@ -24,7 +24,7 @@ export default function Navigation() {
                 type="text"
                 name="q"
                 placeholder="Ask AI anything... Search articles, claims, knowledge..."
-                className="w-full bg-gray-900 text-white pl-10 pr-4 py-2 rounded-full border border-gray-700 focus:border-purple-500 focus:outline-none transition"
+                className="w-full bg-gray-900 text-white pl-10 pr-4 py-2 rounded-full border border-gray-700 focus:border-cyan-400 focus:outline-none transition"
               />
             </div>
           </form>

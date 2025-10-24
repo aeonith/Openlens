@@ -35,7 +35,7 @@ export default function ContentWarning({ children, type, reason }: ContentWarnin
           {reason && <p className="text-gray-400 text-sm">{reason}</p>}
           <button
             onClick={() => setRevealed(true)}
-            className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-lg transition"
+            className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-medium rounded-lg transition"
           >
             I Understand, Show Content
           </button>

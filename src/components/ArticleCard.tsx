@@ -43,7 +43,7 @@ export default function ArticleCard({
     <div className="gradient-border glow-border overflow-hidden transition-all">
       <div className="p-4 bg-gray-900 rounded-lg">
         <div className="flex items-center space-x-3 mb-3">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-white font-bold">
             {author.username[0].toUpperCase()}
           </div>
           <div>
