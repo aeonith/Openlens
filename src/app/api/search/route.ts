@@ -25,11 +25,15 @@ export async function GET(request: Request) {
 
     if (error) throw error
 
-    const enrichedResults = articles?.map(article => ({
-      ...article,
-      relevanceScore: calculateRelevance(article, query),
-      snippet: generateSnippet(article.content, query)
-    }))
+    const enrichedResults = articles?.map((article: any) => {
+      const relevanceScore = calculateRelevance(article, query)
+      const snippet = generateSnippet(article.content, query)
+      return {
+        ...article,
+        relevanceScore,
+        snippet
+      }
+    })
 
     enrichedResults?.sort((a, b) => b.relevanceScore - a.relevanceScore)
 

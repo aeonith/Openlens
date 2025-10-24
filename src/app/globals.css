@@ -44,9 +44,11 @@ body > * {
   border-color: rgb(31, 41, 55);
 }
 
-h1, h2, h3, h4, h5, h6, nav a, button:not(.no-cursive) {
-  font-family: 'Brush Script MT', cursive, -apple-system, BlinkMacSystemFont, sans-serif;
-  letter-spacing: 0.5px;
+h1, h2, h3, h4, h5, h6, nav a, button:not(.no-cursive), .logo {
+  font-family: 'Courier New', 'Courier', monospace;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-style: italic;
 }
 
 @layer utilities {

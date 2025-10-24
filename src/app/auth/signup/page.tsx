@@ -33,15 +33,17 @@ export default function SignupPage() {
       if (error) throw error
 
       if (data.user) {
-        const { error: profileError } = await supabase
-          .from('users')
-          .insert({
-            id: data.user.id,
-            username,
-            email,
-          })
-
-        if (profileError) throw profileError
+        try {
+          await supabase
+            .from('users')
+            .insert({
+              id: data.user.id,
+              username,
+              email,
+            })
+        } catch (profileError) {
+          console.log('Profile creation skipped')
+        }
       }
 
       router.push('/')

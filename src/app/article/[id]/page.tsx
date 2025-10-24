@@ -15,10 +15,11 @@ export default function ArticlePage() {
   const [claims, setClaims] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const supabase = createClient()
+  const articleId = params.id as string
 
   useEffect(() => {
     fetchArticle()
-  }, [params.id])
+  }, [articleId])
 
   async function fetchArticle() {
     try {
@@ -28,21 +29,16 @@ export default function ArticlePage() {
           *,
           users (username, avatar_url, verified)
         `)
-        .eq('id', params.id)
+        .eq('id', articleId)
         .single()
 
       const { data: claimsData } = await supabase
         .from('claims')
         .select('*')
-        .eq('article_id', params.id)
+        .eq('article_id', articleId)
 
       setArticle(articleData)
       setClaims(claimsData || [])
-
-      await supabase
-        .from('articles')
-        .update({ views: (articleData?.views || 0) + 1 })
-        .eq('id', params.id)
     } catch (error) {
       console.error('Error fetching article:', error)
     } finally {
