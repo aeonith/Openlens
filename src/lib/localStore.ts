@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { persist, createJSONStorage } from 'zustand/middleware'
 
 interface User {
   id: string
@@ -103,6 +103,7 @@ export const useLocalStore = create<LocalStore>()(
     }),
     {
       name: 'openlens-storage',
+      storage: createJSONStorage(() => localStorage),
     }
   )
 )

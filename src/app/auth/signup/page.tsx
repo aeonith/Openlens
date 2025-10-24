@@ -40,7 +40,7 @@ export default function SignupPage() {
               id: data.user.id,
               username,
               email,
-            })
+            } as any)
         } catch (profileError) {
           console.log('Profile creation skipped')
         }

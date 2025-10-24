@@ -19,7 +19,6 @@ export default function VerificationBadge({ verified, size = 'md' }: Verificatio
   return (
     <CheckCircle 
       className={`${sizeClasses[size]} text-blue-500 fill-blue-500`}
-      title="Verified User"
     />
   )
 }

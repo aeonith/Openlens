@@ -62,7 +62,7 @@ export default function Comments({ articleId }: CommentsProps) {
         article_id: articleId,
         author_id: user.id,
         text: newComment
-      })
+      } as any)
 
       setNewComment('')
       await fetchComments()

@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import ArticleCard from '@/components/ArticleCard'
 import { Search, Sparkles } from 'lucide-react'
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams()
   const query = searchParams.get('q')
   const [results, setResults] = useState<any[]>([])
@@ -18,11 +18,11 @@ export default function SearchPage() {
     async function performSearch() {
       setLoading(true)
       try {
-        const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
+        const res = await fetch(`/api/search?q=${encodeURIComponent(query || '')}`)
         const data = await res.json()
         setResults(data.results || [])
         
-        generateAISummary(query, data.results || [])
+        generateAISummary(query || '', data.results || [])
       } catch (error) {
         console.error('Search error:', error)
       } finally {
@@ -105,5 +105,20 @@ export default function SearchPage() {
         </div>
       )}
     </div>
+  )
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={
+      <div className="max-w-4xl mx-auto px-4 py-6">
+        <div className="animate-pulse space-y-4">
+          <div className="h-10 bg-gray-800 rounded w-1/2"></div>
+          <div className="h-40 bg-gray-800 rounded"></div>
+        </div>
+      </div>
+    }>
+      <SearchContent />
+    </Suspense>
   )
 }
