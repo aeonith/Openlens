@@ -20,6 +20,39 @@ export default function SubmitPage() {
   const supabase = createClient()
   const { user, addArticle } = useLocalStore()
 
+  if (!user) {
+    return (
+      <div className="max-w-2xl mx-auto px-4 py-12 text-center">
+        <h1 className="text-3xl font-bold mb-4">Sign in to Submit Articles</h1>
+        <button
+          onClick={() => router.push('/auth/simple-login')}
+          className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-3 px-8 rounded-lg transition"
+        >
+          Sign In
+        </button>
+      </div>
+    )
+  }
+
+  if (!user.can_publish) {
+    return (
+      <div className="max-w-2xl mx-auto px-4 py-12">
+        <div className="gradient-border glow-border p-8 bg-gray-900/90 backdrop-blur-sm rounded-lg text-center">
+          <h1 className="text-3xl font-bold mb-4">🔒 Upgrade to Publish</h1>
+          <p className="text-gray-300 mb-6">
+            Subscribe to OpenLens Pro to create articles, upload media, and contribute to the knowledge network.
+          </p>
+          <button
+            onClick={() => router.push('/verify')}
+            className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-lg transition"
+          >
+            Upgrade to Pro - $25
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   const addClaim = () => {
     setClaims([...claims, { text: '', evidence: '', status: 'unverified' }])
   }

@@ -3,13 +3,21 @@
 import { useState } from 'react'
 import { CheckCircle, CreditCard, Shield } from 'lucide-react'
 
+import { useLocalStore } from '@/lib/localStore'
+import { useRouter } from 'next/navigation'
+
 export default function VerifyPage() {
   const [loading, setLoading] = useState(false)
+  const { user, upgradeToPro } = useLocalStore()
+  const router = useRouter()
 
   const handleVerify = async () => {
     setLoading(true)
-    alert('Payment integration coming soon! This will use Stripe for $25 verification.')
-    setLoading(false)
+    setTimeout(() => {
+      upgradeToPro()
+      alert('🎉 Upgraded to Pro! You can now publish articles. (Stripe payment integration coming soon)')
+      router.push('/submit')
+    }, 1000)
   }
 
   return (
