@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { Home, Compass, PlusCircle, User, Search } from 'lucide-react'
 import { usePathname } from 'next/navigation'
+import Logo from './Logo'
 
 export default function Navigation() {
   const pathname = usePathname()
@@ -10,11 +11,9 @@ export default function Navigation() {
   const isActive = (path: string) => pathname === path
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-gray-900/80 backdrop-blur-md border-b border-gray-800 z-50">
+    <nav className="fixed top-0 left-0 right-0 bg-gray-900/95 backdrop-blur-lg border-b border-gray-800/50 z-50 shadow-lg">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="text-2xl font-bold text-white">
-          OpenLens
-        </Link>
+        <Logo />
         
         <div className="flex-1 max-w-md mx-8">
           <form action="/search" method="GET">
