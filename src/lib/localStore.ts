@@ -7,6 +7,9 @@ interface User {
   email: string
   verified: boolean
   reputation_points: number
+  avatar_url?: string
+  bio?: string
+  can_publish: boolean
 }
 
 interface Article {
@@ -38,9 +41,12 @@ interface LocalStore {
   login: (email: string, password: string) => boolean
   signup: (username: string, email: string, password: string) => boolean
   logout: () => void
+  updateProfile: (updates: Partial<User>) => void
+  upgradeToPro: () => void
   addArticle: (article: Omit<Article, 'id' | 'created_at' | 'likes' | 'views'>) => void
   addComment: (comment: Omit<Comment, 'id' | 'created_at' | 'likes'>) => void
   getArticleById: (id: string) => Article | undefined
+  getUserArticles: (userId: string) => Article[]
 }
 
 export const useLocalStore = create<LocalStore>()(
@@ -56,7 +62,10 @@ export const useLocalStore = create<LocalStore>()(
           username: email.split('@')[0],
           email,
           verified: true,
-          reputation_points: 100
+          reputation_points: 100,
+          can_publish: true,
+          bio: 'OpenLens user',
+          avatar_url: undefined
         }
         set({ user })
         return true
@@ -68,13 +77,28 @@ export const useLocalStore = create<LocalStore>()(
           username,
           email,
           verified: false,
-          reputation_points: 0
+          reputation_points: 0,
+          can_publish: false,
+          bio: '',
+          avatar_url: undefined
         }
         set({ user })
         return true
       },
 
       logout: () => set({ user: null }),
+
+      updateProfile: (updates: Partial<User>) => {
+        set((state) => ({
+          user: state.user ? { ...state.user, ...updates } : null
+        }))
+      },
+
+      upgradeToPro: () => {
+        set((state) => ({
+          user: state.user ? { ...state.user, can_publish: true, verified: true } : null
+        }))
+      },
 
       addArticle: (article) => {
         const newArticle: Article = {
@@ -99,6 +123,10 @@ export const useLocalStore = create<LocalStore>()(
 
       getArticleById: (id: string) => {
         return get().articles.find(a => a.id === id)
+      },
+
+      getUserArticles: (userId: string) => {
+        return get().articles.filter(a => a.author_id === userId)
       }
     }),
     {
