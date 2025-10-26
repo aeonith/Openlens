@@ -3,6 +3,7 @@
 import { Heart, MessageCircle, Share2, CheckCircle, AlertTriangle, HelpCircle } from 'lucide-react'
 import Link from 'next/link'
 import VerificationBadge from './VerificationBadge'
+import ReportButton from './ReportButton'
 
 interface ArticleCardProps {
   id: string
@@ -100,6 +101,7 @@ export default function ArticleCard({
           <button className="flex items-center space-x-2 text-gray-400 hover:text-green-500 transition">
             <Share2 className="w-5 h-5" />
           </button>
+          <ReportButton contentId={id} contentType="article" />
         </div>
       </div>
     </div>
