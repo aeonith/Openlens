@@ -55,12 +55,14 @@ export default function AdminDashboard() {
   }
 
   async function handleReport(reportId: string, action: 'approve' | 'reject') {
+    const updates: any = { 
+      status: action === 'approve' ? 'actioned' : 'dismissed',
+      resolved_at: new Date().toISOString()
+    }
+    
     await supabase
       .from('reports')
-      .update({ 
-        status: action === 'approve' ? 'actioned' : 'dismissed',
-        resolved_at: new Date().toISOString()
-      } as any)
+      .update(updates)
       .eq('id', reportId)
 
     fetchReports()
