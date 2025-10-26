@@ -27,10 +27,29 @@ export default function EditProfilePage() {
     e.preventDefault()
     setLoading(true)
     
-    setTimeout(() => {
-      alert('Profile updated! (Full database integration coming soon)')
-      router.push('/profile')
-    }, 500)
+    try {
+      const res = await fetch('/api/profile/update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username,
+          bio,
+          avatar_url: avatarUrl || null
+        })
+      })
+
+      if (res.ok) {
+        alert('Profile updated!')
+        router.push('/profile')
+      } else {
+        const data = await res.json()
+        alert(data.error || 'Failed to update profile')
+      }
+    } catch (error) {
+      alert('Error updating profile')
+    } finally {
+      setLoading(false)
+    }
   }
 
   if (!user) return null

@@ -60,7 +60,7 @@ export default function AdminDashboard() {
       .update({ 
         status: action === 'approve' ? 'actioned' : 'dismissed',
         resolved_at: new Date().toISOString()
-      })
+      } as any)
       .eq('id', reportId)
 
     fetchReports()
