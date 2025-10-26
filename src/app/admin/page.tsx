@@ -30,7 +30,7 @@ export default function AdminDashboard() {
       .eq('id', user.id)
       .single()
 
-    if (profile?.role !== 'admin' && profile?.role !== 'moderator') {
+    if ((profile as any)?.role !== 'admin' && (profile as any)?.role !== 'moderator') {
       alert('Access denied - Admin only')
       router.push('/')
       return
